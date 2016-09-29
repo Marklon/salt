@@ -1,2 +1,15 @@
 # Source https://repo.saltstack.com/#rhel
 
+
+
+
+************************************************Configuring Salt ********************************************************
+
+
+# Add the Firewall Rules to the iptables configuration
+# Add the following lines to that line, but be sure to do it above the line that says DROP:
+
+
+$ vi /etc/sysconfig/iptables-config
+-A INPUT -m state --state new -m tcp -p tcp --dport 4505 -j ACCEPT
+-A INPUT -m state --state new -m tcp -p tcp --dport 4506 -j ACCEPT
