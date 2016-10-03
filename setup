@@ -1,9 +1,53 @@
 # Source https://repo.saltstack.com/#rhel
 
+# Source https://docs.saltstack.com/en/latest/ref/configuration/index.html
 
 
 
 ************************************************Configuring Salt ********************************************************
+
+
+# MASTER CONFIGURATION
+# By default the Salt master listens on ports 4505 and 4506 on all interfaces (0.0.0.0). To bind Salt to a 
+# specific IP, redefine the "interface" directive in the master configuration file, typically /etc/salt/master, as follows:
+
+
+# - #interface: 0.0.0.0
+# + interface: ip of master
+
+
+# MINION CONFIGURATION
+# Although there are many Salt Minion configuration options, configuring a Salt Minion is very simple. 
+# By default a Salt Minion will try to connect to the DNS name "salt"; if the Minion is able to resolve that name 
+# correctly, no configuration is needed.
+
+If the DNS name "salt" does not resolve to point to the correct location of the Master, redefine the "master" 
+directive in the minion configuration file, typically /etc/salt/minion, as follows:
+
+# - #master: salt
+# + master: 10.0.0.1
+
+
+# After updating the configuration file, restart the Salt minion.
+$ systemctl restart salt-minion
+
+
+# KEY IDENTITY
+# Salt provides commands to validate the identity of your Salt master and Salt minions before the initial key exchange. 
+# Validating key identity helps avoid inadvertently connecting to the wrong Salt master, and helps prevent a potential 
+# MiTM attack when establishing the initial connection.
+
+# MASTER KEY FINGERPRINT
+# Print the master key fingerprint by running the following command on the Salt master:
+
+$ salt-key -F master
+
+# Accepting The Salt key on the master
+$ sudo salt-key -a name-of-minion 
+# -A flag will accept all keys from all minions
+
+
+
 
 
 # Add the Firewall Rules to the iptables configuration
